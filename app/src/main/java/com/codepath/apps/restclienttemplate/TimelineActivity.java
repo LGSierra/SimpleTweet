@@ -41,7 +41,6 @@ public class TimelineActivity extends AppCompatActivity {
         adapter = new TweetsAdapter(this, tweets);
         rvTweets.setLayoutManager(new LinearLayoutManager(this));
         rvTweets.setAdapter(adapter);
-
         populateHomeTimeline();
     }
 
@@ -52,10 +51,12 @@ public class TimelineActivity extends AppCompatActivity {
                 Log.i(TAG,"onSuccess!" + json.toString());
                 JSONArray jsonArray = json.jsonArray;
                 try {
-                    List<Tweet> tweets = Tweet.fromJsonArray(jsonArray);
+                    tweets.addAll(Tweet.fromJsonArray(jsonArray));
+                    adapter.notifyDataSetChanged();
+                    //List<Tweet> tweets = Tweet.fromJsonArray(jsonArray);
                 } catch (JSONException e) {
                     Log.e(TAG, "Json exception");
-                    e.printStackTrace();
+                    //e.printStackTrace();
                 }
             }
 
